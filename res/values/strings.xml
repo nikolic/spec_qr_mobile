@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">LoyaltyQR</string>
+    <string name="scan_button">Scan QR code</string>
+    <string name="dummy_content">Welcome screen</string>
+    <string name="title_activity_scan">ScanActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+
+</resources>
