@@ -1,5 +1,7 @@
 package rs.sourcecode.loyaltyqr;
 
+import java.net.URI;
+
 import rs.sourcecode.loyaltyqr.camera.CameraManager;
 import rs.sourcecode.loyaltyqr.camera.CaptureHandler;
 import rs.sourcecode.loyaltyqr.camera.PreviewCallback;
@@ -9,9 +11,10 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
+import data.Fetcher;
 
 /**
  * Capture activity (camera barcode activity)
@@ -29,6 +32,8 @@ public class CaptureActivity extends Activity {
      * Capture handler
      */
     private Handler captureHandler;
+    
+    private static String current_text = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,10 +63,15 @@ public class CaptureActivity extends Activity {
   	  AlertDialog alertDialog = new AlertDialog.Builder(CaptureActivity.this).create(); //Read Update
       alertDialog.setTitle("Success");
       alertDialog.setMessage(qrcode);
+      CaptureActivity.current_text = qrcode;
 
       alertDialog.setButton(alertDialog.BUTTON_POSITIVE, "Continue..", new DialogInterface.OnClickListener() {
          public void onClick(DialogInterface dialog, int which) {
-            // here you can add functions
+        	 Log.v("Current text", CaptureActivity.current_text);
+        	
+        	// new Fetcher().execute(Fetcher.PrepareURL("http://www.api.source-code.rs", "silex/web/index.php/generate_qrcode/", CaptureActivity.current_text ));
+        	 
+        	new Fetcher().execute("http://www.api.source-code.rs/silex/web/index.php/generate_qrcode/" + CaptureActivity.current_text);
          }
       });
       
@@ -89,7 +99,6 @@ public class CaptureActivity extends Activity {
     private class OnDecoded implements CaptureHandler.OnDecodedCallback {
         @Override
         public void onDecoded(String decodedData) {
-        	//    Toast.makeText(CaptureActivity.this, decodedData, Toast.LENGTH_SHORT);
         	createResultDialog(decodedData.toString());   	
         }
     }   
