@@ -34,14 +34,16 @@ public class CaptureActivity extends Activity {
     private Handler captureHandler;
     
     private static String current_text = null;
+    
+    private BoundingView bView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_capture);
-
-        // Create an instance of Camera
-        cameraManager = new CameraManager();
+        
+     // Create an instance of Camera
+    	cameraManager = new CameraManager();
         captureHandler = new CaptureHandler(cameraManager, this, new OnDecoded());
         //requesting next frame for decoding
         cameraManager.requestNextFrame(new PreviewCallback(captureHandler, cameraManager));
@@ -49,7 +51,15 @@ public class CaptureActivity extends Activity {
         // Create our Preview view and set it as the content of our activity.
         cameraPreview = (CameraPreviewView) findViewById(R.id.camera_preview);
         cameraPreview.setCameraManager(cameraManager);
+        
         ((BoundingView) findViewById(R.id.bounding_view)).setCameraManager(cameraManager);
+                
+    }
+    
+    @Override
+    protected void onResume() {
+    	super.onResume();
+    	
     }
 
     @Override
@@ -68,17 +78,26 @@ public class CaptureActivity extends Activity {
       alertDialog.setButton(alertDialog.BUTTON_POSITIVE, "Continue..", new DialogInterface.OnClickListener() {
          public void onClick(DialogInterface dialog, int which) {
         	 Log.v("Current text", CaptureActivity.current_text);
+        	 
         	
         	// new Fetcher().execute(Fetcher.PrepareURL("http://www.api.source-code.rs", "silex/web/index.php/generate_qrcode/", CaptureActivity.current_text ));
         	 
-        	new Fetcher().execute("http://www.api.source-code.rs/silex/web/index.php/generate_qrcode/" + CaptureActivity.current_text);
+        	//new Fetcher().execute("http://www.api.source-code.rs/silex/web/index.php/generate_qrcode/" + CaptureActivity.current_text);
+        	
+        	Intent intent = new Intent(CaptureActivity.this, PreviewActivity.class);
+        	intent.putExtra("qrcode", "blabla");
+        	startActivity(intent);
+        	
          }
       });
       
       alertDialog.setButton(alertDialog.BUTTON_NEGATIVE, "Read again", new DialogInterface.OnClickListener() {
           public void onClick(DialogInterface dialog, int which) {
         	  // TO DO without recreating activity
-        	  reload();
+//        	  reload();
+        	  
+        	  dialog.cancel();
+        	  cameraManager.requestNextFrame(new PreviewCallback(captureHandler, cameraManager));
           }
        });
 
