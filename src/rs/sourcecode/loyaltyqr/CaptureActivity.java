@@ -85,7 +85,7 @@ public class CaptureActivity extends Activity {
         	//new Fetcher().execute("http://www.api.source-code.rs/silex/web/index.php/generate_qrcode/" + CaptureActivity.current_text);
         	
         	Intent intent = new Intent(CaptureActivity.this, PreviewActivity.class);
-        	intent.putExtra("qrcode", "blabla");
+        	intent.putExtra("qrcode", CaptureActivity.current_text);
         	startActivity(intent);
         	
          }
