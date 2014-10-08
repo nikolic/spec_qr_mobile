@@ -36,8 +36,8 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int decode_failed=0x7f050001;
         public static final int decoded=0x7f050000;
         public static final int dummy_button=0x7f05000b;
-        public static final int editTextEmail=0x7f05000d;
-        public static final int editTextPassword=0x7f05000e;
+        public static final int editTextEmail=0x7f05000e;
+        public static final int editTextPassword=0x7f05000d;
         public static final int fullscreen_content=0x7f050009;
         public static final int fullscreen_content_controls=0x7f05000a;
         public static final int imageView1=0x7f050005;
