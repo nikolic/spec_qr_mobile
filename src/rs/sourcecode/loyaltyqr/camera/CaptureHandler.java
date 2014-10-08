@@ -25,7 +25,7 @@ public class CaptureHandler extends Handler {
         switch (msg.what) {
             case R.id.decoded:
                 String data = msg.getData().getString(DECODED_DATA);
-                Toast.makeText(context, data, Toast.LENGTH_LONG).show();
+//                Toast.makeText(context, data, Toast.LENGTH_LONG).show();
                 if (callback != null){
                     callback.onDecoded(data);
                 }
