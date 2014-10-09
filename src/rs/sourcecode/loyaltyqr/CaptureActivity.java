@@ -54,6 +54,7 @@ public class CaptureActivity extends Activity {
     private int company_id;
     private Gift gift;
     private Set<Integer> scaned = new HashSet<Integer>();
+    private Set<Integer> alreadyScaned = new HashSet<Integer>();
     
     ValidateCodeInterface validateCodeInterface = new ValidateCodeInterface() {
 		
@@ -63,7 +64,9 @@ public class CaptureActivity extends Activity {
 				JSONObject obj = new JSONObject(result);
 				if(obj.getBoolean("success") && obj.getBoolean("exist")){
 					JSONObject l = obj.getJSONObject("loyaltyCode");
-					scaned.add(l.getInt("id"));
+					if(scaned.add(l.getInt("id"))){
+						Toast.makeText(CaptureActivity.this, "Kod je validiran.", Toast.LENGTH_SHORT).show();
+					}
 					boolean check = checkIfPriceCool();
 					if(check){
 						createDialog();
@@ -71,7 +74,10 @@ public class CaptureActivity extends Activity {
 						cameraManager.requestNextFrame(new PreviewCallback(captureHandler, cameraManager));
 					}
 				}else{
-					Toast.makeText(CaptureActivity.this, "Kod nije validan ili je vec iskoriscen. Pokusajte sa drugim.", Toast.LENGTH_SHORT).show();
+					JSONObject l = obj.getJSONObject("loyaltyCode");
+					if(alreadyScaned.add(l.getInt("id"))){
+						Toast.makeText(CaptureActivity.this, "Kod nije validan ili je vec iskoriscen. Pokusajte sa drugim.", Toast.LENGTH_SHORT).show();
+					}
 					cameraManager.requestNextFrame(new PreviewCallback(captureHandler, cameraManager));
 				}
 			} catch (JSONException e) {
