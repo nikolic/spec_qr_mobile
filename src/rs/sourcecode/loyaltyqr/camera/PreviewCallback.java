@@ -37,8 +37,9 @@ public class PreviewCallback implements Camera.PreviewCallback {
 
     @Override
     public void onPreviewFrame(byte[] bytes, Camera camera) {
-        Camera.Size previewSize = camera.getParameters().getPreviewSize();
-        new DecodeAsyncTask(previewSize.width, previewSize.height).execute(bytes);
+    	Camera.Size previewSize = camera.getParameters().getPreviewSize();
+	    new DecodeAsyncTask(previewSize.width, previewSize.height).execute(bytes);
+    	
     }
 
     /**

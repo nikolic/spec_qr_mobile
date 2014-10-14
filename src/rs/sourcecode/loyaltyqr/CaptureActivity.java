@@ -54,7 +54,7 @@ public class CaptureActivity extends Activity {
     private int company_id;
     private Gift gift;
     private Set<Integer> scaned = new HashSet<Integer>();
-    private Set<Integer> alreadyScaned = new HashSet<Integer>();
+    private Set<String> alreadyScaned = new HashSet<String>();
     
     ValidateCodeInterface validateCodeInterface = new ValidateCodeInterface() {
 		
@@ -74,8 +74,7 @@ public class CaptureActivity extends Activity {
 						cameraManager.requestNextFrame(new PreviewCallback(captureHandler, cameraManager));
 					}
 				}else{
-					JSONObject l = obj.getJSONObject("loyaltyCode");
-					if(alreadyScaned.add(l.getInt("id"))){
+					if(alreadyScaned.add(obj.getString("secret"))){
 						Toast.makeText(CaptureActivity.this, "Kod nije validan ili je vec iskoriscen. Pokusajte sa drugim.", Toast.LENGTH_SHORT).show();
 					}
 					cameraManager.requestNextFrame(new PreviewCallback(captureHandler, cameraManager));

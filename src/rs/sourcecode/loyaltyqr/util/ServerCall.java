@@ -13,6 +13,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.util.Log;
+
 public class ServerCall {
 	
 	private static final String urlLogin = "http://213.136.75.129/qrl/QRLoyalty/public/api/authenticate";
@@ -68,6 +70,8 @@ public class ServerCall {
 	}
 	
 	public static String validateCode(String token, String secret){
+		Log.i("TAG", token);
+		Log.i("TAG", secret);
 		JSONObject obj = new JSONObject();
 		try {
 			obj.put("company_id", token);
@@ -115,6 +119,8 @@ public class ServerCall {
 	
 	public static String updateCodes(String company_id, ArrayList<Integer> codes){
 		JSONObject obj = new JSONObject();
+		Log.i("TAG", company_id);
+		Log.i("TAG", codes.toString());
 		try {
 			obj.put("company_id", company_id);
 			for(int i=0; i<codes.size(); i++){
